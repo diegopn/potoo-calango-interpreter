@@ -12,6 +12,12 @@ debugger events.
 The Calango built-in `pi()` returns Rust's IEEE-754 binary64 approximation
 (`f64::consts::PI`) of π.
 
+## Original language references
+
+- [Calango 1.1 and the learning environment overview (UnB FGA)](https://sae.unb.br/cae/conteudo/unbfga/apc/new_ambientedealgoritmo.html)
+
+The reference describes the original Calango environment and its role in teaching programming logic. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```clg
@@ -141,6 +147,10 @@ potoo-calango-interpreter = { git = "https://github.com/diegopn/potoo-calango-in
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
 
-## DOI
+## DOI and citation
 
-A stable Figshare DOI will be added when the first public release is published.
+DOI: [10.6084/m9.figshare.34914153](https://doi.org/10.6084/m9.figshare.34914153)
+
+Suggested reference (ABNT NBR 6023:2018):
+
+> NASCIMENTO, Diego Pereira do. *Calango interpreter v0.1.0*. 2026. Programa de computador. Disponível em: https://doi.org/10.6084/m9.figshare.34914153. Acesso em: 4 nov. 2026.
