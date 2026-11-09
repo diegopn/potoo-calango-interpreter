@@ -1,16 +1,21 @@
-# potoo-calango-interpreter
+<h1 align="center">Calango Interpreter</h1>
 
-An independent Rust interpreter for the Calango pseudolanguage. It reads the
-`algoritmo`/`principal` structure and Calango's Portuguese keywords, including
-typed variables, arrays, routines, expressions, control flow, and console I/O.
+<p align="center">An independent Rust interpreter library and CLI for the Calango pseudolanguage.</p>
 
-This is a library crate for embedding Calango execution in a Rust application;
-it includes a standalone terminal command-line runner. It exposes
-source-located diagnostics, host-provided input and output, cancellation, and
-debugger events.
+<p align="center">
+  <a href="https://github.com/diegopn/potoo-calango-interpreter/releases/latest">Download</a> ·
+  <a href="https://diegopn.github.io/potoo-site/">Website</a> ·
+  <a href="https://diegopn.github.io/potoo-site/manual/calango/">User manual</a>
+</p>
 
-The Calango built-in `pi()` returns Rust's IEEE-754 binary64 approximation
-(`f64::consts::PI`) of π.
+<p align="center">
+  <a href="https://www.rust-lang.org/"><img alt="Rust" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <a href="https://doc.rust-lang.org/cargo/"><img alt="Cargo" src="https://img.shields.io/badge/Cargo-DEA584?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <img alt="Rust library" src="https://img.shields.io/badge/Rust_library-4A86CF?style=for-the-badge">
+  <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
+</p>
+
+It reads Calango’s `algoritmo`/`principal` structure and Portuguese keywords for typed variables, arrays, routines, expressions, control flow, and console I/O. The library exposes source-located diagnostics, host-provided input and output, cancellation, and debugger events. The built-in `pi()` returns Rust’s IEEE-754 binary64 approximation (`f64::consts::PI`) of π.
 
 ## Original language references
 
@@ -56,6 +61,7 @@ GPL-3.0-or-later. See [LICENSE](LICENSE).
 
 ## Project policies
 
+- [Code of conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 
@@ -71,64 +77,52 @@ The terminal runner provides standard input/output. It continues through debugge
 
 ## Install a prebuilt runner
 
-Download the archive for your system and `SHA256SUMS` from the [latest GitHub Release](https://github.com/diegopn/potoo-calango-interpreter/releases/latest). Binary releases are not published yet. The planned first release will be tagged `v0.1.0`; its release workflow is configured to produce these asset names:
+Prebuilt binaries are published on the [GitHub Releases page](https://github.com/diegopn/potoo-calango-interpreter/releases). Choose a version and the package for your system there. Packages are currently available for Linux x86_64, Windows x86_64 (MSVC), and Intel macOS (x86_64). The current release does not include an Apple silicon (arm64) package.
 
-| System | Archive |
-| --- | --- |
-| Linux x86_64 | `potoo-calango-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz` |
-| Windows x86_64 | `potoo-calango-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip` |
-| macOS Intel | `potoo-calango-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz` |
-
-
-Current CI and release targets are Linux x86_64, Windows x86_64, and macOS Intel (x86_64). Apple silicon (arm64) is not supported in this release; support may be added in a future version.
+Download only the package for your system and the `SHA256SUMS` file, and save both in the same folder. Before extracting or running the executable, compare the package's SHA-256 hash with its corresponding entry in `SHA256SUMS`. Run the commands below from that folder. Replace `example.clg` with the path to a source file you want to run; the release package does not include a sample file.
 
 ### Linux x86_64
 
 ```sh
-asset=potoo-calango-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-release=https://github.com/diegopn/potoo-calango-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-calango-interpreter-v*-x86_64-unknown-linux-gnu.tar.gz | head -n 1)
 sha256sum "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "potoo-calango-interpreter-v0.1.0-x86_64-unknown-linux-gnu/potoo-calango" "$HOME/.local/bin/potoo-calango"
+install -m 755 "${asset%.tar.gz}/potoo-calango" "$HOME/.local/bin/potoo-calango"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-calango example.clg
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in your shell profile to keep it for future sessions.
+To keep the command available in new Linux sessions, add the `export PATH="$HOME/.local/bin:$PATH"` line to your shell profile.
 
 ### Windows x86_64 (PowerShell)
 
 ```powershell
-$asset = "potoo-calango-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip"
-$release = "https://github.com/diegopn/potoo-calango-interpreter/releases/download/v0.1.0"
-Invoke-WebRequest "$release/$asset" -OutFile $asset
-Invoke-WebRequest "$release/SHA256SUMS" -OutFile SHA256SUMS
-Get-FileHash ".\$asset" -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive ".\$asset" -DestinationPath .\potoo-calango-interpreter
-.\potoo-calango-interpreter\potoo-calango-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-calango.exe .\example.clg
+$archive = Get-ChildItem -Filter "potoo-calango-interpreter-v*-x86_64-pc-windows-msvc.zip" | Select-Object -First 1
+Get-FileHash $archive.FullName -Algorithm SHA256 # compare with the matching SHA256SUMS entry
+Expand-Archive $archive.FullName -DestinationPath .\potoo-calango
+$exe = Get-ChildItem .\potoo-calango -Filter "potoo-calango.exe" -Recurse | Select-Object -First 1
+& $exe.FullName .\example.clg
 ```
 
-To run `potoo-calango.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
+To run `potoo-calango.exe` from another folder, add the directory containing the executable to your user `PATH`.
 
-### macOS Intel
+### Intel macOS
 
-This release supports Intel Macs only. Apple silicon is not supported in this version.
+The published macOS package targets Intel Macs (x86_64). There is no prebuilt Apple silicon package in the current release.
 
 ```sh
-asset=potoo-calango-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz
-release=https://github.com/diegopn/potoo-calango-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-calango-interpreter-v*-x86_64-apple-darwin.tar.gz | head -n 1)
 shasum -a 256 "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
 install -m 755 "${asset%.tar.gz}/potoo-calango" "$HOME/.local/bin/potoo-calango"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-calango example.clg
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in `~/.zprofile` to keep it for future macOS sessions.
+Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future macOS sessions.
+
 
 ## Install from source
 
@@ -146,6 +140,14 @@ potoo-calango-interpreter = { git = "https://github.com/diegopn/potoo-calango-in
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
+
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
 
 ## DOI and citation
 
