@@ -19,6 +19,8 @@
   <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
 </p>
 
+Originally developed as part of the Potoo IDE project, this interpreter is an independent Rust software package intended to be distributed separately from the IDE. It can be embedded as a library in other Rust projects or run as a standalone command-line tool on Linux, macOS, and Windows.
+
 It reads Calango’s `algoritmo`/`principal` structure and Portuguese keywords for typed variables, arrays, routines, expressions, control flow, and console I/O. The library exposes source-located diagnostics, host-provided input and output, cancellation, and debugger events. The built-in `pi()` returns Rust’s IEEE-754 binary64 approximation (`f64::consts::PI`) of π.
 
 ## Original language references
