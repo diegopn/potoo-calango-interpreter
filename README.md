@@ -27,6 +27,12 @@ It reads Calango’s `algoritmo`/`principal` structure and Portuguese keywords f
 
 The reference describes the original Calango environment and its role in teaching programming logic. This repository provides an independent Rust implementation.
 
+## Original language references
+
+- [Calango 1.1 and the learning environment overview (UnB FGA)](https://sae.unb.br/cae/conteudo/unbfga/apc/new_ambientedealgoritmo.html)
+
+The reference describes the original Calango environment and its role in teaching programming logic. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```clg
