@@ -27,12 +27,6 @@ It reads Calango’s `algoritmo`/`principal` structure and Portuguese keywords f
 
 The reference describes the original Calango environment and its role in teaching programming logic. This repository provides an independent Rust implementation.
 
-## Original language references
-
-- [Calango 1.1 and the learning environment overview (UnB FGA)](https://sae.unb.br/cae/conteudo/unbfga/apc/new_ambientedealgoritmo.html)
-
-The reference describes the original Calango environment and its role in teaching programming logic. This repository provides an independent Rust implementation.
-
 ## Source example
 
 ```clg
@@ -68,6 +62,14 @@ cargo test
 ## License
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).
+
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
 
 ## Project policies
 
@@ -150,14 +152,6 @@ potoo-calango-interpreter = { git = "https://github.com/diegopn/potoo-calango-in
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
-
-## Support
-
-If this interpreter is useful in your work, you can support its continued development:
-
-<p align="left">
-  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
-</p>
 
 ## DOI and citation
 
