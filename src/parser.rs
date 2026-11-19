@@ -329,11 +329,37 @@ impl Parser {
     }
 
     fn do_while_statement(&mut self) -> Result<StatementKind, Vec<Diagnostic>> {
-        let body = self.body(&["enquanto"])?;
+        let body = self.do_while_body()?;
         self.expect_word("enquanto")?;
         let condition = self.condition()?;
         self.expect_symbol(";")?;
         Ok(StatementKind::DoWhile { body, condition })
+    }
+
+    fn do_while_body(&mut self) -> Result<Vec<Statement>, Vec<Diagnostic>> {
+        let mut statements = Vec::new();
+        while !self.is_end() && !self.is_do_while_terminator() {
+            if self.match_symbol(";") {
+                continue;
+            }
+            statements.push(self.statement()?);
+        }
+        if self.is_end() {
+            return Err(vec![
+                self.error("esperado enquanto antes do fim do arquivo"),
+            ]);
+        }
+        Ok(statements)
+    }
+
+    fn is_do_while_terminator(&mut self) -> bool {
+        let start = self.index;
+        let depth = self.depth;
+        let is_terminator =
+            self.match_word("enquanto") && self.condition().is_ok() && self.check_symbol(";");
+        self.index = start;
+        self.depth = depth;
+        is_terminator
     }
 
     fn for_statement(&mut self) -> Result<StatementKind, Vec<Diagnostic>> {
