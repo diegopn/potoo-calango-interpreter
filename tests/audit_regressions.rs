@@ -208,6 +208,33 @@ fn stop_inside_do_while_and_for_bodies_propagates() {
 }
 
 #[test]
+fn do_while_body_can_contain_a_pretest_while_loop() {
+    let program = source(
+        "inteiro i;\nfaca\ni = 0;\nenquanto i < 2 faca\ni = i + 1;\nescreval(i);\nfimEnquanto\nenquanto falso;",
+    );
+    let mut io = TestIo::default();
+
+    execute(&program, &mut io).unwrap();
+
+    assert_eq!(io.output, "1\n2\n");
+}
+
+#[test]
+fn do_while_lookahead_preserves_expression_depth_diagnostics() {
+    let condition = format!("{}verdadeiro{}", "(".repeat(128), ")".repeat(128));
+    let program = source(&format!(
+        "faca\nenquanto {condition} faca\nfimEnquanto\nenquanto falso;"
+    ));
+
+    let diagnostics = parse(&program).unwrap_err();
+
+    assert_eq!(
+        diagnostics[0].message,
+        "expressão excede o limite de profundidade"
+    );
+}
+
+#[test]
 fn stop_inside_routine_body_ends_the_calling_program() {
     let program = "algoritmo teste;\nprocedimento escrever()\nescreva(\"x\");\nfimProcedimento\nprincipal\nescrever();\nescreva(\"depois\");\nfimPrincipal\n";
     let mut io = TestIo {
