@@ -102,6 +102,7 @@ The v0.1.1 release provides native CLI packages for Linux x86_64 (GNU), Windows 
 ### Linux x86_64 (GNU)
 
 ```sh
+set -euo pipefail
 asset="potoo-calango-interpreter-v0.1.1-x86_64-unknown-linux-gnu.tar.gz"
 grep -F "  $asset" SHA256SUMS | sha256sum --check -
 tar -xzf "$asset"
@@ -134,6 +135,7 @@ To run `potoo-calango.exe` from any folder, add `$env:USERPROFILE\.local\bin\pot
 ### Intel macOS x86_64
 
 ```sh
+set -euo pipefail
 asset="potoo-calango-interpreter-v0.1.1-x86_64-apple-darwin.tar.gz"
 grep -F "  $asset" SHA256SUMS | shasum -a 256 -c -
 tar -xzf "$asset"
@@ -146,6 +148,7 @@ potoo-calango example.clg
 ### Apple silicon macOS arm64
 
 ```sh
+set -euo pipefail
 asset="potoo-calango-interpreter-v0.1.1-aarch64-apple-darwin.tar.gz"
 grep -F "  $asset" SHA256SUMS | shasum -a 256 -c -
 tar -xzf "$asset"
